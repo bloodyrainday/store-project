@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ProductCard } from "./common/components/ProductCard/ProductCard";
 import { useAppDispatch } from "./common/hooks/useAppDispatch";
-import { fetchProducts, selectProducts } from "./model/products-reducer";
+import { fetchProducts, selectProducts } from "./model/products-slice";
 import { useAppSelector } from "./common/hooks/useAppSelector";
 import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
 
@@ -36,7 +36,7 @@ const App = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({
     title: "",
-    price: "",
+    price: 0,
     description: "",
     image: "",
   });
