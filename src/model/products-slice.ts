@@ -46,7 +46,30 @@ export const productsSlice = createAppSlice({
         },
       }
     ),
+    createProduct: create.asyncThunk(
+      async (
+        arg: Omit<ProductType, "rating">,
+        { rejectWithValue, dispatch }
+      ) => {
+        try {
+          const res = await productsApi.createProduct(arg);
+          console.log("create", res.data);
+          return { product: res.data };
+        } catch (err: any) {
+          return rejectWithValue(null);
+        }
+      },
+      {
+        fulfilled: (state, action) => {
+          state.unshift({
+            ...action.payload.product,
+            rating: { rate: 0, count: 1 },
+          });
+        },
+      }
+    ),
   }),
+
   // extraReducers: (builder) => {
   //   builder.addCase(clearDataAC, (_state, _action) => {
   //     return [];
