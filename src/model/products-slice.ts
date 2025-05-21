@@ -27,6 +27,25 @@ export const productsSlice = createAppSlice({
         },
       }
     ),
+    deleteProduct: create.asyncThunk(
+      async (arg: { id: number }, { rejectWithValue, dispatch }) => {
+        try {
+          const res = await productsApi.deleteProduct(arg.id);
+          console.log("delete", res.data);
+          return { id: arg.id };
+        } catch (err: any) {
+          return rejectWithValue(null);
+        }
+      },
+      {
+        fulfilled: (state, action) => {
+          const index = state.findIndex((s) => s.id === action.payload.id);
+          if (index !== -1) {
+            state.splice(index, 1);
+          }
+        },
+      }
+    ),
   }),
   // extraReducers: (builder) => {
   //   builder.addCase(clearDataAC, (_state, _action) => {
@@ -40,7 +59,7 @@ export const productsSlice = createAppSlice({
 });
 
 export const productsReducer = productsSlice.reducer;
-export const { fetchProducts } = productsSlice.actions;
+export const { fetchProducts, deleteProduct } = productsSlice.actions;
 export const { selectProducts } = productsSlice.selectors;
 
 // import { createAction } from "@reduxjs/toolkit";

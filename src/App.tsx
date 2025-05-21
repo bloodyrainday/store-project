@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { ProductCard } from "./common/components/ProductCard/ProductCard";
 import { useAppDispatch } from "./common/hooks/useAppDispatch";
-import { fetchProducts, selectProducts } from "./model/products-slice";
+import {
+  deleteProduct,
+  fetchProducts,
+  selectProducts,
+} from "./model/products-slice";
 import { useAppSelector } from "./common/hooks/useAppSelector";
 import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
 
@@ -56,6 +60,7 @@ const App = () => {
 
   const handleDeleteProduct = (id: any) => {
     console.log("Удаление товара с ID:", id);
+    dispatch(deleteProduct({ id }));
     // Здесь будет логика удаления
   };
 
