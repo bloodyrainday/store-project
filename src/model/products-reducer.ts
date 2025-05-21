@@ -11,8 +11,8 @@ export const productsSlice = createAppSlice({
       async (_arg, { rejectWithValue, dispatch }) => {
         try {
           const res = await productsApi.getProducts();
-
-          return { todolists: res.data };
+          console.log("reeees", res.data);
+          return { products: res.data };
         } catch (err: any) {
           return rejectWithValue(null);
         }
@@ -23,9 +23,7 @@ export const productsSlice = createAppSlice({
           //   state.push({ ...tl, filter: "all", entityStatus: "idle" })
           // })
 
-          return action.payload?.todolists.map((tl) => {
-            return { ...tl, filter: "all", entityStatus: "idle" };
-          });
+          return action.payload?.products;
         },
       }
     ),

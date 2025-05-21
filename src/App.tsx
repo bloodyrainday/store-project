@@ -1,57 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductCard } from "./common/components/ProductCard/ProductCard";
-import { useSelector } from "react-redux";
-import type { RootState } from "./app/store";
-import axios from "axios";
-import { instance } from "./common/instance/instance";
-
-// Компонент детального просмотра товара
-const ProductDetail = ({ product, onClose }: any) => {
-  if (!product) return null;
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: "0",
-        left: "0",
-        right: "0",
-        bottom: "0",
-        backgroundColor: "rgba(0,0,0,0.5)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        zIndex: "1000",
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "20px",
-          borderRadius: "8px",
-          width: "400px",
-        }}
-      >
-        <h2>{product.name}</h2>
-        <img
-          src={product.image}
-          alt={product.name}
-          style={{ width: "100%", height: "200px", objectFit: "cover" }}
-        />
-        <p>
-          <strong>Цена:</strong> {product.price} ₽
-        </p>
-        <p>
-          <strong>Описание:</strong> {product.description}
-        </p>
-        <p>
-          <strong>Продавец:</strong> {product.seller}
-        </p>
-        <button onClick={onClose}>Закрыть</button>
-      </div>
-    </div>
-  );
-};
+import { useAppDispatch } from "./common/hooks/useAppDispatch";
+import { fetchProducts, selectProducts } from "./model/products-reducer";
+import { useAppSelector } from "./common/hooks/useAppSelector";
+import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
 
 export type ProductType = {
   id: number;
@@ -63,18 +15,19 @@ export type ProductType = {
   title: string;
 };
 
-// Главный компонент приложения
 const App = () => {
   // Локальные данные о товарах
   // const products = useSelector<RootState, ProductType[]>(
   //   (state) => state.products
   // );
-
-  const [products, setProducts] = useState<ProductType[] | null>(null);
+  const products = useAppSelector(selectProducts);
+  const dispatch = useAppDispatch();
+  //const [products, setProducts] = useState<ProductType[] | null>(null);
   useEffect(() => {
-    instance.get<ProductType[]>("products").then((res) => {
-      setProducts(res.data);
-    });
+    // instance.get<ProductType[]>("products").then((res) => {
+    //   setProducts(res.data);
+    // });
+    dispatch(fetchProducts());
   }, []);
 
   console.log(products);
@@ -82,11 +35,10 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({
-    name: "",
+    title: "",
     price: "",
     description: "",
     image: "",
-    seller: "",
   });
 
   // Фильтрация товаров по поисковому запросу
@@ -136,9 +88,9 @@ const App = () => {
           <input
             type="text"
             placeholder="Название"
-            value={newProduct.name}
+            value={newProduct.title}
             onChange={(e) =>
-              setNewProduct({ ...newProduct, name: e.target.value })
+              setNewProduct({ ...newProduct, title: e.target.value })
             }
           />
           <input
@@ -146,7 +98,7 @@ const App = () => {
             placeholder="Цена"
             value={newProduct.price}
             onChange={(e) =>
-              setNewProduct({ ...newProduct, price: e.target.value })
+              setNewProduct({ ...newProduct, price: +e.target.value })
             }
           />
           <input
@@ -165,14 +117,14 @@ const App = () => {
               setNewProduct({ ...newProduct, image: e.target.value })
             }
           />
-          <input
+          {/* <input
             type="text"
             placeholder="Продавец"
             value={newProduct.seller}
             onChange={(e) =>
               setNewProduct({ ...newProduct, seller: e.target.value })
             }
-          />
+          /> */}
           <button onClick={handleAddProduct}>Добавить товар</button>
         </div>
       </div>

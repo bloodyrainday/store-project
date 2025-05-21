@@ -3,6 +3,6 @@ import { instance } from "../instance/instance";
 
 export const productsApi = {
   getProducts() {
-    return instance.get<ProductType[]>("todo-lists");
+    return instance.get<ProductType[]>("products");
   },
 };
