@@ -1,6 +1,6 @@
 import type { ProductType } from "../../../App";
 
-type FormInputProps = {
+type InputFieldProps = {
   title: string;
   type: string;
   value: string | number;
@@ -11,14 +11,14 @@ type FormInputProps = {
   name: string;
 };
 
-export const FormInput = ({
+export const InputField = ({
   title,
   newProduct,
   setNewProduct,
   type,
   value,
   name,
-}: FormInputProps) => {
+}: InputFieldProps) => {
   return (
     <>
       <label htmlFor="">{title}</label>

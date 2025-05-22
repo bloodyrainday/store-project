@@ -1,8 +1,9 @@
 import { useState, type FormEvent } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { createProduct } from "../../../model/products-slice";
-import { FormInput } from "../FormInput/FormInput";
 import type { ProductType } from "../../../App";
+import { InputField } from "../InputField/InputField";
+import { SelectField } from "../SelectField/SelectField";
 
 type Props = {};
 
@@ -48,7 +49,7 @@ export const AddNewProductForm = (props: Props) => {
           width: "50%",
         }}
       >
-        <FormInput
+        <InputField
           title="title"
           type="text"
           name="title"
@@ -56,7 +57,7 @@ export const AddNewProductForm = (props: Props) => {
           newProduct={newProduct}
           setNewProduct={setNewProduct}
         />
-        <FormInput
+        <InputField
           title="price"
           type="number"
           name="price"
@@ -64,7 +65,7 @@ export const AddNewProductForm = (props: Props) => {
           newProduct={newProduct}
           setNewProduct={setNewProduct}
         />
-        <FormInput
+        <InputField
           title="description"
           type="text"
           name="description"
@@ -72,7 +73,7 @@ export const AddNewProductForm = (props: Props) => {
           newProduct={newProduct}
           setNewProduct={setNewProduct}
         />
-        <FormInput
+        <InputField
           title="image url"
           type="text"
           name="image"
@@ -81,25 +82,7 @@ export const AddNewProductForm = (props: Props) => {
           setNewProduct={setNewProduct}
         />
 
-        <label htmlFor="">category</label>
-        <select
-          value={newProduct.category}
-          onChange={(e) =>
-            setNewProduct({
-              ...newProduct,
-              category: e.target.value as
-                | "men's clothing"
-                | "women's clothing"
-                | "electronics"
-                | "jewelery",
-            })
-          }
-        >
-          <option value="men's clothing">men's clothing</option>
-          <option value="women's clothing">women's clothing</option>
-          <option value="electronics">electronics</option>
-          <option value="jewelery">jewelery</option>
-        </select>
+        <SelectField newProduct={newProduct} setNewProduct={setNewProduct} />
         <button
           type="submit"
           onClick={handleAddProduct}
