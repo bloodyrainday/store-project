@@ -14,4 +14,7 @@ export const productsApi = {
   updateProduct(id: number, body: Omit<ProductType, "rating">) {
     return instance.put<Omit<ProductType, "rating">>(`products/${id}`, body);
   },
+  getSingleProduct(id: number) {
+    return instance.get<Omit<ProductType, "rating">>(`products/${id}`);
+  },
 };

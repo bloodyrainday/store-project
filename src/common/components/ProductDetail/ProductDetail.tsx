@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import type { ProductType } from "../../../App";
 
 type ProductDetailType = {
@@ -15,11 +15,16 @@ export const ProductDetail = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedProduct, setEditedProduct] = useState({ ...product });
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e:
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLSelectElement>
+      | ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setEditedProduct((prev: any) => ({
+    setEditedProduct((prev: ProductType) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "price" ? +value : value,
     }));
   };
 
@@ -58,7 +63,7 @@ export const ProductDetail = ({
             <h2>
               <input
                 type="text"
-                name="name"
+                name="title"
                 value={editedProduct.title}
                 onChange={handleChange}
                 style={{ width: "100%" }}
@@ -70,7 +75,7 @@ export const ProductDetail = ({
               style={{ width: "100%", height: "200px", objectFit: "cover" }}
             />
             <p>
-              <strong>Цена:</strong>
+              <strong>price:</strong>
               <input
                 type="text"
                 name="price"
@@ -80,21 +85,21 @@ export const ProductDetail = ({
               />
             </p>
             <p>
-              <strong>Категория:</strong>
+              <strong>category:</strong>
               <select
                 name="category"
                 value={editedProduct.category}
                 onChange={handleChange}
                 style={{ width: "100%" }}
               >
-                <option value="men's clothing">Мужская одежда</option>
-                <option value="women's clothing">Женская одежда</option>
-                <option value="electronics">Электроника</option>
-                <option value="jewelery">Украшения</option>
+                <option value="men's clothing">men's clothing</option>
+                <option value="women's clothing">women's clothing</option>
+                <option value="electronics">electronics</option>
+                <option value="jewelery">jewelery</option>
               </select>
             </p>
             <p>
-              <strong>Описание:</strong>
+              <strong>description:</strong>
               <textarea
                 name="description"
                 value={editedProduct.description}
@@ -113,8 +118,8 @@ export const ProductDetail = ({
               />
             </p> */}
             <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-              <button onClick={handleSave}>Сохранить</button>
-              <button onClick={() => setIsEditing(false)}>Отменить</button>
+              <button onClick={handleSave}>save</button>
+              <button onClick={() => setIsEditing(false)}>cancel</button>
             </div>
           </>
         ) : (
@@ -126,20 +131,20 @@ export const ProductDetail = ({
               style={{ width: "100%", height: "200px", objectFit: "cover" }}
             />
             <p>
-              <strong>Цена:</strong> {product.price} ₽
+              <strong>price:</strong> {product.price} $
             </p>
             <p>
-              <strong>Категория:</strong> {product.category}
+              <strong>category:</strong> {product.category}
             </p>
             <p>
-              <strong>Описание:</strong> {product.description}
+              <strong>description:</strong> {product.description}
             </p>
             {/* <p>
               <strong>Продавец:</strong> {product.seller}
             </p> */}
             <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-              <button onClick={() => setIsEditing(true)}>Редактировать</button>
-              <button onClick={onClose}>Закрыть</button>
+              <button onClick={() => setIsEditing(true)}>edit</button>
+              <button onClick={onClose}>close</button>
             </div>
           </>
         )}

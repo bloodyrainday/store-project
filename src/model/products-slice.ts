@@ -106,10 +106,18 @@ export const productsSlice = createAppSlice({
       {
         fulfilled: (state, action) => {
           debugger;
-          let item = state.find((s) => s.id === action.payload?.product.id);
+          // let item = state.find((s) => s.id === action.payload?.product.id);
 
-          if (item) {
-            item = { ...item, ...action.payload?.product };
+          // if (item) {
+          //   item = { ...item, ...action.payload?.product };
+          // }
+
+          let index = state.findIndex(
+            (s) => s.id === action.payload?.product.id
+          );
+
+          if (index !== -1) {
+            state[index] = { ...state[index], ...action.payload?.product };
           }
         },
       }

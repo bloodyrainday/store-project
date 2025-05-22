@@ -22,7 +22,7 @@ export const ProductCard = ({ product, onClick }: any) => {
         style={{ width: "100%", height: "120px", objectFit: "cover" }}
       />
       <h3>{product.name}</h3>
-      <p>Цена: {product.price} ₽</p>
+      <p>price: {product.price} $</p>
     </div>
   );
 };
