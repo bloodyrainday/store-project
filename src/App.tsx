@@ -16,6 +16,7 @@ import {
 } from "./model/products-slice";
 import { useAppSelector } from "./common/hooks/useAppSelector";
 import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
+import { SearchInput } from "./common/components/SearchInput/SearchInput";
 
 export type ProductType = {
   id: number;
@@ -32,14 +33,9 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts()).then(() => {
-      dispatch(getSingleProduct(2));
-    });
+    dispatch(fetchProducts());
   }, []);
 
-  console.log(products);
-
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [newProduct, setNewProduct] = useState({
     title: "",
@@ -50,13 +46,12 @@ const App = () => {
   });
 
   // Фильтрация товаров по поисковому запросу
-  const filteredProducts = products?.filter(
-    (product) =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredProducts = products?.filter(
+  //   (product) =>
+  //     product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     product.description.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
-  // Заглушки для функций
   const handleAddProduct = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log("Добавление товара:", newProduct);
@@ -80,30 +75,15 @@ const App = () => {
     dispatch(
       updateProduct({ id: updatedProduct.id, domainModel: updatedProduct })
     );
-    // setProducts(
-    //   products.map((product) =>
-    //     product.id === updatedProduct.id ? updatedProduct : product
-    //   )
-    // );
     setSelectedProduct(updatedProduct);
   };
 
   return (
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-      <h1>Доска объявлений</h1>
+      <h1>CATALOG</h1>
 
-      {/* Поисковая строка */}
-      <div style={{ margin: "20px 0" }}>
-        <input
-          type="text"
-          placeholder="Поиск товаров..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ padding: "8px", width: "300px" }}
-        />
-      </div>
+      <SearchInput />
 
-      {/* Форма добавления нового товара */}
       <div
         style={{
           border: "1px solid #ddd",
@@ -140,7 +120,7 @@ const App = () => {
             <label htmlFor="">price</label>
             <input
               required
-              type="text"
+              type="number"
               value={newProduct.price}
               onChange={(e) =>
                 setNewProduct({ ...newProduct, price: +e.target.value })
@@ -210,31 +190,35 @@ const App = () => {
           gap: "10px",
         }}
       >
-        {filteredProducts?.map((product) => (
-          <div key={product.id} style={{ position: "relative" }}>
-            <ProductCard product={product} onClick={setSelectedProduct} />
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDeleteProduct(product.id);
-              }}
-              style={{
-                position: "absolute",
-                top: "5px",
-                right: "5px",
-                backgroundColor: "red",
-                color: "white",
-                border: "none",
-                borderRadius: "50%",
-                width: "25px",
-                height: "25px",
-                cursor: "pointer",
-              }}
-            >
-              ×
-            </button>
-          </div>
-        ))}
+        {products.length === 1 && typeof products[0] === "string" ? (
+          <h2>SORRY THERE IS NO PRODUCT WITH SUCH ID!!! :(</h2>
+        ) : (
+          products?.map((product) => (
+            <div key={product.id} style={{ position: "relative" }}>
+              <ProductCard product={product} onClick={setSelectedProduct} />
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteProduct(product.id);
+                }}
+                style={{
+                  position: "absolute",
+                  top: "5px",
+                  right: "5px",
+                  backgroundColor: "red",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "50%",
+                  width: "25px",
+                  height: "25px",
+                  cursor: "pointer",
+                }}
+              >
+                ×
+              </button>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Модальное окно с деталями товара */}

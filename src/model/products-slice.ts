@@ -117,7 +117,6 @@ export const productsSlice = createAppSlice({
     getSingleProduct: create.asyncThunk(
       async (id: number, { rejectWithValue }) => {
         try {
-          debugger;
           const res = await productsApi.getSingleProduct(id);
           console.log("get single product", res.data);
           return { product: res.data };
@@ -127,8 +126,6 @@ export const productsSlice = createAppSlice({
       },
       {
         fulfilled: (_state, action) => {
-          debugger;
-
           return [action.payload.product];
         },
       }
