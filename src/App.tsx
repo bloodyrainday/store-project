@@ -1,22 +1,16 @@
-import {
-  useEffect,
-  useState,
-  type FormEvent,
-  type FormEventHandler,
-} from "react";
+import { useEffect, useState } from "react";
 import { ProductCard } from "./common/components/ProductCard/ProductCard";
 import { useAppDispatch } from "./common/hooks/useAppDispatch";
 import {
-  createProduct,
   deleteProduct,
   fetchProducts,
-  getSingleProduct,
   selectProducts,
   updateProduct,
 } from "./model/products-slice";
 import { useAppSelector } from "./common/hooks/useAppSelector";
 import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
 import { SearchInput } from "./common/components/SearchInput/SearchInput";
+import AddNewProductForm from "./common/components/AddNewProductForm/AddNewProductForm";
 
 export type ProductType = {
   id: number;
@@ -37,13 +31,6 @@ const App = () => {
   }, []);
 
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [newProduct, setNewProduct] = useState({
-    title: "",
-    price: 0,
-    description: "",
-    image: "",
-    category: "men's clothing",
-  });
 
   // Фильтрация товаров по поисковому запросу
   // const filteredProducts = products?.filter(
@@ -51,19 +38,6 @@ const App = () => {
   //     product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
   //     product.description.toLowerCase().includes(searchTerm.toLowerCase())
   // );
-
-  const handleAddProduct = (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log("Добавление товара:", newProduct);
-    dispatch(createProduct(newProduct));
-    setNewProduct({
-      title: "",
-      price: 0,
-      description: "",
-      image: "",
-      category: "men's clothing",
-    });
-  };
 
   const handleDeleteProduct = (id: any) => {
     console.log("Удаление товара с ID:", id);
@@ -93,93 +67,7 @@ const App = () => {
         }}
       >
         <h3 style={{ textAlign: "center" }}>form for adding new products</h3>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <form
-            action=""
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "5px",
-              width: "50%",
-            }}
-          >
-            <label htmlFor="">title</label>
-            <input
-              required
-              type="text"
-              value={newProduct.title}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, title: e.target.value })
-              }
-            />
-            <label htmlFor="">price</label>
-            <input
-              required
-              type="number"
-              value={newProduct.price}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, price: +e.target.value })
-              }
-            />
-            <label htmlFor="">description</label>
-            <input
-              required
-              type="text"
-              value={newProduct.description}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, description: e.target.value })
-              }
-            />
-            <label htmlFor="">image link</label>
-            <input
-              required
-              type="text"
-              value={newProduct.image}
-              onChange={(e) =>
-                setNewProduct({ ...newProduct, image: e.target.value })
-              }
-            />
-            {/* <input
-            type="select"
-            placeholder="Категория"
-            value={newProduct.category}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, seller: e.target.value })
-            }
-          /> */}
-            <label htmlFor="">category</label>
-            <select
-              value={newProduct.category}
-              onChange={(e) =>
-                setNewProduct({
-                  ...newProduct,
-                  category: e.target.value as
-                    | "men's clothing"
-                    | "women's clothing"
-                    | "electronics"
-                    | "jewelery",
-                })
-              }
-            >
-              <option value="men's clothing">men's clothing</option>
-              <option value="women's clothing">women's clothing</option>
-              <option value="electronics">electronics</option>
-              <option value="jewelery">jewelery</option>
-            </select>
-            <button
-              type="submit"
-              onSubmit={handleAddProduct}
-              style={{ marginTop: "15px" }}
-            >
-              add new product
-            </button>
-          </form>
-        </div>
+        <AddNewProductForm />
       </div>
 
       {/* Список товаров */}
