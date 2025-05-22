@@ -11,6 +11,7 @@ import {
   deleteProduct,
   fetchProducts,
   selectProducts,
+  updateProduct,
 } from "./model/products-slice";
 import { useAppSelector } from "./common/hooks/useAppSelector";
 import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
@@ -79,6 +80,10 @@ const App = () => {
   };
 
   const handleSaveProduct = (updatedProduct: any) => {
+    console.log("editedProduct", updatedProduct);
+    dispatch(
+      updateProduct({ id: updatedProduct.id, domainModel: updatedProduct })
+    );
     // setProducts(
     //   products.map((product) =>
     //     product.id === updatedProduct.id ? updatedProduct : product

@@ -1,5 +1,5 @@
-import { nanoid } from "@reduxjs/toolkit";
 import type { ProductType } from "../App";
+import type { RootState } from "../app/store";
 import { productsApi } from "../common/api/productsApi";
 import { createAppSlice } from "../common/utils/createAppSlice";
 
@@ -9,7 +9,7 @@ export const productsSlice = createAppSlice({
   reducers: (create) => ({
     //async actions
     fetchProducts: create.asyncThunk(
-      async (_arg, { rejectWithValue, dispatch }) => {
+      async (_arg, { rejectWithValue }) => {
         try {
           const res = await productsApi.getProducts();
           console.log("reeees", res.data);
@@ -29,7 +29,7 @@ export const productsSlice = createAppSlice({
       }
     ),
     deleteProduct: create.asyncThunk(
-      async (arg: { id: number }, { rejectWithValue, dispatch }) => {
+      async (arg: { id: number }, { rejectWithValue }) => {
         try {
           const res = await productsApi.deleteProduct(arg.id);
           console.log("delete", res.data);
@@ -51,7 +51,7 @@ export const productsSlice = createAppSlice({
       async (
         newProduct: Omit<ProductType, "rating" | "id">,
 
-        { rejectWithValue, dispatch, getState }
+        { rejectWithValue }
       ) => {
         try {
           const res = await productsApi.createProduct(newProduct);
@@ -70,6 +70,50 @@ export const productsSlice = createAppSlice({
         },
       }
     ),
+
+    updateProduct: create.asyncThunk(
+      async (
+        args: { id: number; domainModel: Partial<ProductType> },
+
+        { rejectWithValue, getState }
+      ) => {
+        try {
+          debugger;
+          const state = getState() as RootState;
+          const product = state.products.find((p) => p.id === args.id);
+
+          if (product) {
+            const model: Omit<ProductType, "rating"> = {
+              id: product.id,
+              title: product.title,
+              price: product.price,
+              description: product.description,
+              category: product.category,
+              image: product.image,
+            };
+
+            const res = await productsApi.updateProduct(args.id, {
+              ...model,
+              ...args.domainModel,
+            });
+            console.log("update", res.data);
+            return { product: res.data };
+          }
+        } catch (err: any) {
+          return rejectWithValue(null);
+        }
+      },
+      {
+        fulfilled: (state, action) => {
+          debugger;
+          let item = state.find((s) => s.id === action.payload?.product.id);
+
+          if (item) {
+            item = { ...item, ...action.payload?.product };
+          }
+        },
+      }
+    ),
   }),
 
   // extraReducers: (builder) => {
@@ -84,40 +128,6 @@ export const productsSlice = createAppSlice({
 });
 
 export const productsReducer = productsSlice.reducer;
-export const { fetchProducts, deleteProduct, createProduct } =
+export const { fetchProducts, deleteProduct, createProduct, updateProduct } =
   productsSlice.actions;
 export const { selectProducts } = productsSlice.selectors;
-
-// import { createAction } from "@reduxjs/toolkit";
-// import type { ProductType } from "../App";
-
-// const initialState: ProductType[] = [];
-
-// export const deleteProductAC = createAction<{ id: number }>(
-//   "products/delete_product"
-// );
-
-// export const createProductAC = createAction<ProductType>(
-//   "products/create_product"
-// );
-
-// export type DeleteProductAction = ReturnType<typeof deleteProductAC>;
-// export type CreateProductAction = ReturnType<typeof createProductAC>;
-
-// type Actions = DeleteProductAction | CreateProductAction;
-
-// export const productsReducer = (
-//   state: ProductType[] = initialState,
-//   action: Actions
-// ): ProductType[] => {
-//   switch (action.type) {
-//     case "products/create_product": {
-//       return state.filter((product) => product.id !== action.payload.id);
-//     }
-//     case "products/delete_product": {
-//       return state.filter((product) => product.id !== action.payload.id);
-//     }
-//     default:
-//       return state;
-//   }
-// };
