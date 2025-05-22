@@ -1,5 +1,9 @@
 import React from "react";
 import type { ProductType } from "../../../App";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 type SelectFieldProps = {
   newProduct: Omit<ProductType, "rating" | "id">;
@@ -14,25 +18,30 @@ export const SelectField = ({
 }: SelectFieldProps) => {
   return (
     <>
-      <label htmlFor="">category</label>
-      <select
-        value={newProduct.category}
-        onChange={(e) =>
-          setNewProduct({
-            ...newProduct,
-            category: e.target.value as
-              | "men's clothing"
-              | "women's clothing"
-              | "electronics"
-              | "jewelery",
-          })
-        }
-      >
-        <option value="men's clothing">men's clothing</option>
-        <option value="women's clothing">women's clothing</option>
-        <option value="electronics">electronics</option>
-        <option value="jewelery">jewelery</option>
-      </select>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">category</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={newProduct.category}
+          label="Age"
+          onChange={(e) =>
+            setNewProduct({
+              ...newProduct,
+              category: e.target.value as
+                | "men's clothing"
+                | "women's clothing"
+                | "electronics"
+                | "jewelery",
+            })
+          }
+        >
+          <MenuItem value={"men's clothing"}>men's clothing</MenuItem>
+          <MenuItem value={"women's clothing"}>women's clothing</MenuItem>
+          <MenuItem value={"electronics"}>electronics</MenuItem>
+          <MenuItem value={"jewelery"}>jewelery</MenuItem>
+        </Select>
+      </FormControl>
     </>
   );
 };

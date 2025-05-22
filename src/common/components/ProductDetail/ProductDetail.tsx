@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent } from "react";
 import type { ProductType } from "../../../App";
+import Button from "@mui/material/Button";
 
 type ProductDetailType = {
   product: ProductType;
@@ -55,12 +56,13 @@ export const ProductDetail = ({
           backgroundColor: "white",
           padding: "20px",
           borderRadius: "8px",
-          width: "400px",
+          width: "50%",
+          height: "80vh",
         }}
       >
-        {isEditing ? (
-          <>
-            <h2>
+        <>
+          <h2>
+            {isEditing ? (
               <input
                 type="text"
                 name="title"
@@ -68,14 +70,18 @@ export const ProductDetail = ({
                 onChange={handleChange}
                 style={{ width: "100%" }}
               />
-            </h2>
-            <img
-              src={editedProduct.image}
-              alt={editedProduct.title}
-              style={{ width: "100%", height: "200px", objectFit: "cover" }}
-            />
-            <p>
-              <strong>price:</strong>
+            ) : (
+              product.title
+            )}
+          </h2>
+          <img
+            src={editedProduct.image}
+            alt={editedProduct.title}
+            style={{ width: "100%", height: "200px", objectFit: "contain" }}
+          />
+          <p>
+            <strong>price: </strong>
+            {isEditing ? (
               <input
                 type="text"
                 name="price"
@@ -83,9 +89,13 @@ export const ProductDetail = ({
                 onChange={handleChange}
                 style={{ width: "100%" }}
               />
-            </p>
-            <p>
-              <strong>category:</strong>
+            ) : (
+              product.price + "$"
+            )}
+          </p>
+          <p>
+            <strong>category: </strong>
+            {isEditing ? (
               <select
                 name="category"
                 value={editedProduct.category}
@@ -97,57 +107,50 @@ export const ProductDetail = ({
                 <option value="electronics">electronics</option>
                 <option value="jewelery">jewelery</option>
               </select>
-            </p>
-            <p>
-              <strong>description:</strong>
+            ) : (
+              product.category
+            )}
+          </p>
+          <p>
+            <strong>description: </strong>
+            {isEditing ? (
               <textarea
                 name="description"
                 value={editedProduct.description}
                 onChange={handleChange}
                 style={{ width: "100%" }}
               />
-            </p>
-            {/* <p>
-              <strong>Продавец:</strong>
-              <input
-                type="text"
-                name="seller"
-                value={editedProduct.seller}
-                onChange={handleChange}
-                style={{ width: "100%" }}
-              />
-            </p> */}
-            <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-              <button onClick={handleSave}>save</button>
-              <button onClick={() => setIsEditing(false)}>cancel</button>
-            </div>
-          </>
-        ) : (
-          <>
-            <h2>{product.title}</h2>
-            <img
-              src={product.image}
-              alt={product.title}
-              style={{ width: "100%", height: "200px", objectFit: "cover" }}
-            />
-            <p>
-              <strong>price:</strong> {product.price} $
-            </p>
-            <p>
-              <strong>category:</strong> {product.category}
-            </p>
-            <p>
-              <strong>description:</strong> {product.description}
-            </p>
-            {/* <p>
-              <strong>Продавец:</strong> {product.seller}
-            </p> */}
-            <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
-              <button onClick={() => setIsEditing(true)}>edit</button>
-              <button onClick={onClose}>close</button>
-            </div>
-          </>
-        )}
+            ) : (
+              product.description
+            )}
+          </p>
+
+          <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+            {isEditing ? (
+              <Button variant="contained" color="success" onClick={handleSave}>
+                save
+              </Button>
+            ) : (
+              <Button variant="contained" onClick={() => setIsEditing(true)}>
+                edit
+              </Button>
+            )}
+
+            {isEditing ? (
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => setIsEditing(false)}
+              >
+                cancel
+              </Button>
+            ) : (
+              <Button variant="outlined" onClick={onClose}>
+                close
+              </Button>
+            )}
+          </div>
+        </>
       </div>
     </div>
   );

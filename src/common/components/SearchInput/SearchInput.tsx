@@ -1,5 +1,6 @@
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { fetchProducts, getSingleProduct } from "../../../model/products-slice";
+import TextField from "@mui/material/TextField";
 
 type Props = {};
 
@@ -7,9 +8,11 @@ export const SearchInput = (props: Props) => {
   const dispatch = useAppDispatch();
   return (
     <div style={{ margin: "20px 0" }}>
-      <input
+      <TextField
+        id="outlined-basic"
+        label="look for a product by ID"
+        variant="outlined"
         type="number"
-        placeholder="look for a product by ID"
         onChange={(e) => {
           if (!e.target.value) {
             dispatch(fetchProducts());
@@ -18,7 +21,7 @@ export const SearchInput = (props: Props) => {
             console.log("eee", e.target.value);
           }
         }}
-        style={{ padding: "8px", width: "300px" }}
+        style={{ width: "300px" }}
       />
     </div>
   );

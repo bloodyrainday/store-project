@@ -5,6 +5,7 @@ import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
 import { SearchInput } from "./common/components/SearchInput/SearchInput";
 import AddNewProductForm from "./common/components/AddNewProductForm/AddNewProductForm";
 import { Products } from "./common/components/Products/Products";
+import styles from "./App.module.css";
 
 export type ProductType = {
   id: number;
@@ -34,20 +35,13 @@ const App = () => {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
-      <h1>CATALOG</h1>
+    <div className={styles.wrapper}>
+      <h1>STORE</h1>
 
       <SearchInput />
 
-      <div
-        style={{
-          border: "1px solid #ddd",
-          borderRadius: "8px",
-          padding: "16px",
-          marginBottom: "20px",
-        }}
-      >
-        <h3 style={{ textAlign: "center" }}>form for adding new products</h3>
+      <div className={styles.form}>
+        <h3 className={styles.formTitle}>form for adding new products</h3>
         <AddNewProductForm />
       </div>
 

@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { createProduct } from "../../../model/products-slice";
 import type { ProductType } from "../../../App";
 import { InputField } from "../InputField/InputField";
+import Button from "@mui/material/Button";
 import { SelectField } from "../SelectField/SelectField";
 
 type Props = {};
@@ -45,12 +46,11 @@ export const AddNewProductForm = (props: Props) => {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "5px",
+          gap: "20px",
           width: "50%",
         }}
       >
         <InputField
-          title="title"
           type="text"
           name="title"
           value={newProduct.title}
@@ -58,7 +58,6 @@ export const AddNewProductForm = (props: Props) => {
           setNewProduct={setNewProduct}
         />
         <InputField
-          title="price"
           type="number"
           name="price"
           value={newProduct.price}
@@ -66,7 +65,6 @@ export const AddNewProductForm = (props: Props) => {
           setNewProduct={setNewProduct}
         />
         <InputField
-          title="description"
           type="text"
           name="description"
           value={newProduct.description}
@@ -74,7 +72,6 @@ export const AddNewProductForm = (props: Props) => {
           setNewProduct={setNewProduct}
         />
         <InputField
-          title="image url"
           type="text"
           name="image"
           value={newProduct.image}
@@ -83,13 +80,14 @@ export const AddNewProductForm = (props: Props) => {
         />
 
         <SelectField newProduct={newProduct} setNewProduct={setNewProduct} />
-        <button
+        <Button
+          variant="contained"
           type="submit"
           onClick={handleAddProduct}
           style={{ marginTop: "15px" }}
         >
           add new product
-        </button>
+        </Button>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import type { ProductType } from "../../../App";
+import TextField from "@mui/material/TextField";
 
 type InputFieldProps = {
-  title: string;
   type: string;
   value: string | number;
   newProduct: Omit<ProductType, "rating" | "id">;
@@ -12,7 +12,6 @@ type InputFieldProps = {
 };
 
 export const InputField = ({
-  title,
   newProduct,
   setNewProduct,
   type,
@@ -21,11 +20,11 @@ export const InputField = ({
 }: InputFieldProps) => {
   return (
     <>
-      <label htmlFor="">{title}</label>
-      <input
+      <TextField
+        variant="outlined"
         required
         type={type}
-        name={name}
+        label={name}
         value={value}
         onChange={(e) =>
           setNewProduct({ ...newProduct, [name]: e.target.value })

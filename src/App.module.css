@@ -1,0 +1,23 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.wrapper {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.formTitle {
+  text-align: center;
+}
