@@ -1,3 +1,4 @@
+import { nanoid } from "@reduxjs/toolkit";
 import type { ProductType } from "../App";
 import { productsApi } from "../common/api/productsApi";
 import { createAppSlice } from "../common/utils/createAppSlice";
@@ -48,11 +49,12 @@ export const productsSlice = createAppSlice({
     ),
     createProduct: create.asyncThunk(
       async (
-        arg: Omit<ProductType, "rating">,
-        { rejectWithValue, dispatch }
+        newProduct: Omit<ProductType, "rating" | "id">,
+
+        { rejectWithValue, dispatch, getState }
       ) => {
         try {
-          const res = await productsApi.createProduct(arg);
+          const res = await productsApi.createProduct(newProduct);
           console.log("create", res.data);
           return { product: res.data };
         } catch (err: any) {
@@ -61,7 +63,7 @@ export const productsSlice = createAppSlice({
       },
       {
         fulfilled: (state, action) => {
-          state.unshift({
+          state.push({
             ...action.payload.product,
             rating: { rate: 0, count: 1 },
           });
@@ -82,7 +84,8 @@ export const productsSlice = createAppSlice({
 });
 
 export const productsReducer = productsSlice.reducer;
-export const { fetchProducts, deleteProduct } = productsSlice.actions;
+export const { fetchProducts, deleteProduct, createProduct } =
+  productsSlice.actions;
 export const { selectProducts } = productsSlice.selectors;
 
 // import { createAction } from "@reduxjs/toolkit";

@@ -1,7 +1,13 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  type FormEvent,
+  type FormEventHandler,
+} from "react";
 import { ProductCard } from "./common/components/ProductCard/ProductCard";
 import { useAppDispatch } from "./common/hooks/useAppDispatch";
 import {
+  createProduct,
   deleteProduct,
   fetchProducts,
   selectProducts,
@@ -11,7 +17,7 @@ import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
 
 export type ProductType = {
   id: number;
-  category: "men's clothing" | "women's clothing" | "electronics" | "jewelery";
+  category: string;
   description: string;
   image: string;
   price: number;
@@ -43,6 +49,7 @@ const App = () => {
     price: 0,
     description: "",
     image: "",
+    category: "men's clothing",
   });
 
   // Фильтрация товаров по поисковому запросу
@@ -53,15 +60,22 @@ const App = () => {
   );
 
   // Заглушки для функций
-  const handleAddProduct = () => {
+  const handleAddProduct = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     console.log("Добавление товара:", newProduct);
-    // Здесь будет логика добавления
+    dispatch(createProduct(newProduct));
+    setNewProduct({
+      title: "",
+      price: 0,
+      description: "",
+      image: "",
+      category: "men's clothing",
+    });
   };
 
   const handleDeleteProduct = (id: any) => {
     console.log("Удаление товара с ID:", id);
     dispatch(deleteProduct({ id }));
-    // Здесь будет логика удаления
   };
 
   return (
@@ -88,49 +102,93 @@ const App = () => {
           marginBottom: "20px",
         }}
       >
-        <h3>Добавить новый товар</h3>
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <input
-            type="text"
-            placeholder="Название"
-            value={newProduct.title}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, title: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Цена"
-            value={newProduct.price}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, price: +e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Описание"
-            value={newProduct.description}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, description: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Ссылка на изображение"
-            value={newProduct.image}
-            onChange={(e) =>
-              setNewProduct({ ...newProduct, image: e.target.value })
-            }
-          />
-          {/* <input
-            type="text"
-            placeholder="Продавец"
-            value={newProduct.seller}
+        <h3 style={{ textAlign: "center" }}>form for adding new products</h3>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <form
+            action=""
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "5px",
+              width: "50%",
+            }}
+          >
+            <label htmlFor="">title</label>
+            <input
+              required
+              type="text"
+              value={newProduct.title}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, title: e.target.value })
+              }
+            />
+            <label htmlFor="">price</label>
+            <input
+              required
+              type="text"
+              value={newProduct.price}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, price: +e.target.value })
+              }
+            />
+            <label htmlFor="">description</label>
+            <input
+              required
+              type="text"
+              value={newProduct.description}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, description: e.target.value })
+              }
+            />
+            <label htmlFor="">image link</label>
+            <input
+              required
+              type="text"
+              value={newProduct.image}
+              onChange={(e) =>
+                setNewProduct({ ...newProduct, image: e.target.value })
+              }
+            />
+            {/* <input
+            type="select"
+            placeholder="Категория"
+            value={newProduct.category}
             onChange={(e) =>
               setNewProduct({ ...newProduct, seller: e.target.value })
             }
           /> */}
-          <button onClick={handleAddProduct}>Добавить товар</button>
+            <label htmlFor="">category</label>
+            <select
+              value={newProduct.category}
+              onChange={(e) =>
+                setNewProduct({
+                  ...newProduct,
+                  category: e.target.value as
+                    | "men's clothing"
+                    | "women's clothing"
+                    | "electronics"
+                    | "jewelery",
+                })
+              }
+            >
+              <option value="men's clothing">men's clothing</option>
+              <option value="women's clothing">women's clothing</option>
+              <option value="electronics">electronics</option>
+              <option value="jewelery">jewelery</option>
+            </select>
+            <button
+              type="submit"
+              onSubmit={handleAddProduct}
+              style={{ marginTop: "15px" }}
+            >
+              add new product
+            </button>
+          </form>
         </div>
       </div>
 

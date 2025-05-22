@@ -8,7 +8,7 @@ export const productsApi = {
   deleteProduct(id: number) {
     return instance.delete<ProductType>(`products/${id}`);
   },
-  createProduct(body: Omit<ProductType, "rating">) {
+  createProduct(body: Omit<ProductType, "rating" | "id">) {
     return instance.post<Omit<ProductType, "rating">>("products", body);
   },
 };
