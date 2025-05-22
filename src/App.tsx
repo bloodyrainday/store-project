@@ -78,6 +78,15 @@ const App = () => {
     dispatch(deleteProduct({ id }));
   };
 
+  const handleSaveProduct = (updatedProduct: any) => {
+    // setProducts(
+    //   products.map((product) =>
+    //     product.id === updatedProduct.id ? updatedProduct : product
+    //   )
+    // );
+    setSelectedProduct(updatedProduct);
+  };
+
   return (
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
       <h1>Доска объявлений</h1>
@@ -232,6 +241,7 @@ const App = () => {
         <ProductDetail
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
+          onSave={handleSaveProduct}
         />
       )}
     </div>

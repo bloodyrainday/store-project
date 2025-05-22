@@ -11,4 +11,7 @@ export const productsApi = {
   createProduct(body: Omit<ProductType, "rating" | "id">) {
     return instance.post<Omit<ProductType, "rating">>("products", body);
   },
+  updateProduct(id: number, body: Omit<ProductType, "rating">) {
+    return instance.put<Omit<ProductType, "rating">>(`products/${id}`, body);
+  },
 };
