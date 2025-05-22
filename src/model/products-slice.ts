@@ -78,7 +78,6 @@ export const productsSlice = createAppSlice({
         { rejectWithValue, getState }
       ) => {
         try {
-          debugger;
           const state = getState() as RootState;
           const product = state.products.find((p) => p.id === args.id);
 
@@ -105,13 +104,6 @@ export const productsSlice = createAppSlice({
       },
       {
         fulfilled: (state, action) => {
-          debugger;
-          // let item = state.find((s) => s.id === action.payload?.product.id);
-
-          // if (item) {
-          //   item = { ...item, ...action.payload?.product };
-          // }
-
           let index = state.findIndex(
             (s) => s.id === action.payload?.product.id
           );
@@ -119,6 +111,25 @@ export const productsSlice = createAppSlice({
           if (index !== -1) {
             state[index] = { ...state[index], ...action.payload?.product };
           }
+        },
+      }
+    ),
+    getSingleProduct: create.asyncThunk(
+      async (id: number, { rejectWithValue }) => {
+        try {
+          debugger;
+          const res = await productsApi.getSingleProduct(id);
+          console.log("get single product", res.data);
+          return { product: res.data };
+        } catch (err: any) {
+          return rejectWithValue(null);
+        }
+      },
+      {
+        fulfilled: (_state, action) => {
+          debugger;
+
+          return [action.payload.product];
         },
       }
     ),
@@ -136,6 +147,11 @@ export const productsSlice = createAppSlice({
 });
 
 export const productsReducer = productsSlice.reducer;
-export const { fetchProducts, deleteProduct, createProduct, updateProduct } =
-  productsSlice.actions;
+export const {
+  fetchProducts,
+  deleteProduct,
+  createProduct,
+  updateProduct,
+  getSingleProduct,
+} = productsSlice.actions;
 export const { selectProducts } = productsSlice.selectors;

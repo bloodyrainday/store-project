@@ -15,6 +15,6 @@ export const productsApi = {
     return instance.put<Omit<ProductType, "rating">>(`products/${id}`, body);
   },
   getSingleProduct(id: number) {
-    return instance.get<Omit<ProductType, "rating">>(`products/${id}`);
+    return instance.get<ProductType>(`products/${id}`);
   },
 };

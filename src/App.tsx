@@ -10,6 +10,7 @@ import {
   createProduct,
   deleteProduct,
   fetchProducts,
+  getSingleProduct,
   selectProducts,
   updateProduct,
 } from "./model/products-slice";
@@ -27,18 +28,13 @@ export type ProductType = {
 };
 
 const App = () => {
-  // Локальные данные о товарах
-  // const products = useSelector<RootState, ProductType[]>(
-  //   (state) => state.products
-  // );
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
-  //const [products, setProducts] = useState<ProductType[] | null>(null);
+
   useEffect(() => {
-    // instance.get<ProductType[]>("products").then((res) => {
-    //   setProducts(res.data);
-    // });
-    dispatch(fetchProducts());
+    dispatch(fetchProducts()).then(() => {
+      dispatch(getSingleProduct(2));
+    });
   }, []);
 
   console.log(products);
