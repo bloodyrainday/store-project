@@ -1,4 +1,4 @@
-import type { ProductType } from "../../../App";
+import type { ProductType } from "../../../app/App";
 import TextField from "@mui/material/TextField";
 
 type InputFieldProps = {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ProductType } from "../../../App";
+import type { ProductType } from "../../../app/App";
 import Button from "@mui/material/Button";
 import styles from "./ProductDetail.module.css";
 import { InputField } from "../InputField/InputField";

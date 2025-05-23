@@ -1,10 +1,10 @@
 import React from "react";
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { deleteProduct, selectProducts } from "../../../model/products-slice";
-import { ProductCard } from "../ProductCard/ProductCard";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../../common/hooks/useAppSelector";
+import { deleteProduct, selectProducts } from "../../state/products-slice";
+import { useAppDispatch } from "../../../common/hooks/useAppDispatch";
 import styles from "./Products.module.css";
-import type { ProductType } from "../../../App";
+import type { ProductType } from "../../../app/App";
+import { ProductCard } from "./ProductCard/ProductCard";
 
 type ProductsProps = {
   setSelectedProduct: React.Dispatch<React.SetStateAction<ProductType | null>>;

@@ -1,5 +1,8 @@
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { fetchProducts, getSingleProduct } from "../../../model/products-slice";
+import {
+  fetchProducts,
+  getSingleProduct,
+} from "../../../products/state/products-slice";
 import TextField from "@mui/material/TextField";
 import styles from "./SearchInput.module.css";
 

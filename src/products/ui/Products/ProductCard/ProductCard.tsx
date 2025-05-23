@@ -1,6 +1,6 @@
 import Paper from "@mui/material/Paper";
 import styles from "./ProductCard.module.css";
-import type { ProductType } from "../../../App";
+import type { ProductType } from "../../../../app/App";
 
 type ProductCardType = {
   product: ProductType;

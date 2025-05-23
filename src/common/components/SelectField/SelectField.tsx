@@ -1,5 +1,5 @@
 import React from "react";
-import type { ProductType } from "../../../App";
+import type { ProductType } from "../../../app/App";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";

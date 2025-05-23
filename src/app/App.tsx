@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "./common/hooks/useAppDispatch";
-import { fetchProducts, updateProduct } from "./model/products-slice";
-import { ProductDetail } from "./common/components/ProductDetail/ProductDetail";
-import { SearchInput } from "./common/components/SearchInput/SearchInput";
-import AddNewProductForm from "./common/components/AddNewProductForm/AddNewProductForm";
-import { Products } from "./common/components/Products/Products";
+import { useAppDispatch } from "../common/hooks/useAppDispatch";
+import { fetchProducts, updateProduct } from "../products/state/products-slice";
+import { ProductDetail } from "../common/components/ProductDetail/ProductDetail";
+import { SearchInput } from "../common/components/SearchInput/SearchInput";
+import AddNewProductForm from "../common/components/AddNewProductForm/AddNewProductForm";
+import { Products } from "../products/ui/Products/Products";
 import styles from "./App.module.css";
 
 export type ProductType = {

@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { createProduct } from "../../../model/products-slice";
-import type { ProductType } from "../../../App";
+import { createProduct } from "../../../products/state/products-slice";
+import type { ProductType } from "../../../app/App";
 import { InputField } from "../InputField/InputField";
 import Button from "@mui/material/Button";
 import { SelectField } from "../SelectField/SelectField";

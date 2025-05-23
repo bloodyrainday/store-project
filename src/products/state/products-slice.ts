@@ -1,7 +1,7 @@
-import type { ProductType } from "../App";
-import type { RootState } from "../app/store";
-import { productsApi } from "../common/api/productsApi";
-import { createAppSlice } from "../common/utils/createAppSlice";
+import type { ProductType } from "../../app/App";
+import type { RootState } from "../../app/store";
+import { productsApi } from "../api/productsApi";
+import { createAppSlice } from "../../common/utils/createAppSlice";
 
 export const productsSlice = createAppSlice({
   name: "products",
@@ -74,7 +74,6 @@ export const productsSlice = createAppSlice({
         { rejectWithValue, getState }
       ) => {
         try {
-          debugger;
           const state = getState() as RootState;
           const product = state.products.find((p) => p.id === args.id);
 

@@ -1,5 +1,5 @@
-import type { ProductType } from "../../App";
-import { instance } from "../instance/instance";
+import type { ProductType } from "../../app/App";
+import { instance } from "../../common/instance/instance";
 
 export const productsApi = {
   getProducts() {
