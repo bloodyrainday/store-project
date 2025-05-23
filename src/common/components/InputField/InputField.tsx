@@ -29,6 +29,7 @@ export const InputField = ({
         onChange={(e) =>
           setNewProduct({ ...newProduct, [name]: e.target.value })
         }
+        style={{ width: "100%" }}
       />
     </>
   );

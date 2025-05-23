@@ -1,30 +1,24 @@
 import Paper from "@mui/material/Paper";
+import styles from "./ProductCard.module.css";
+import type { ProductType } from "../../../App";
 
-type ProductCardType = {};
+type ProductCardType = {
+  product: ProductType;
+  callback: React.Dispatch<React.SetStateAction<ProductType | null>>;
+};
 
-export const ProductCard = ({ product, onClick }: any) => {
+export const ProductCard = ({ product, callback }: ProductCardType) => {
   return (
     <Paper
       elevation={3}
-      className="product-card"
-      onClick={() => onClick(product)}
-      style={{
-        padding: "16px",
-        margin: "10px",
-        cursor: "pointer",
-        width: "250px",
-        height: "300px",
-        borderRadius: "8px",
-      }}
+      className={styles.procuctCard}
+      onClick={() => callback(product)}
     >
-      <img
-        src={product.image}
-        alt={product.name}
-        style={{ width: "100%", height: "120px", objectFit: "contain" }}
-      />
-      <h3>{product.name}</h3>
+      <img src={product.image} alt={product.title} className={styles.image} />
       <h4>{product.title}</h4>
-      <p>{product.price} $</p>
+      <p>
+        <strong>price:</strong> {product.price} $
+      </p>
     </Paper>
   );
 };

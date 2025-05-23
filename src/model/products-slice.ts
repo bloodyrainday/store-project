@@ -20,10 +20,6 @@ export const productsSlice = createAppSlice({
       },
       {
         fulfilled: (_state, action) => {
-          // action.payload?.todolists.forEach((tl) => {
-          //   state.push({ ...tl, filter: "all", entityStatus: "idle" })
-          // })
-
           return action.payload?.products;
         },
       }
@@ -78,6 +74,7 @@ export const productsSlice = createAppSlice({
         { rejectWithValue, getState }
       ) => {
         try {
+          debugger;
           const state = getState() as RootState;
           const product = state.products.find((p) => p.id === args.id);
 
@@ -131,12 +128,6 @@ export const productsSlice = createAppSlice({
       }
     ),
   }),
-
-  // extraReducers: (builder) => {
-  //   builder.addCase(clearDataAC, (_state, _action) => {
-  //     return [];
-  //   });
-  // },
 
   selectors: {
     selectProducts: (state) => state,

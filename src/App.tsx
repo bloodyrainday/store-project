@@ -24,13 +24,13 @@ const App = () => {
     dispatch(fetchProducts());
   }, []);
 
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
+    null
+  );
 
-  const handleSaveProduct = (updatedProduct: any) => {
-    console.log("editedProduct", updatedProduct);
-    dispatch(
-      updateProduct({ id: updatedProduct.id, domainModel: updatedProduct })
-    );
+  const handleSaveProduct = (id: number, updatedProduct: any) => {
+    console.log("updatedProduct", updatedProduct);
+    dispatch(updateProduct({ id, domainModel: updatedProduct }));
     setSelectedProduct(updatedProduct);
   };
 

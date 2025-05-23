@@ -1,13 +1,12 @@
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { fetchProducts, getSingleProduct } from "../../../model/products-slice";
 import TextField from "@mui/material/TextField";
+import styles from "./SearchInput.module.css";
 
-type Props = {};
-
-export const SearchInput = (props: Props) => {
+export const SearchInput = () => {
   const dispatch = useAppDispatch();
   return (
-    <div style={{ margin: "20px 0" }}>
+    <div className={styles.wrapper}>
       <TextField
         id="outlined-basic"
         label="look for a product by ID"
@@ -18,10 +17,9 @@ export const SearchInput = (props: Props) => {
             dispatch(fetchProducts());
           } else {
             dispatch(getSingleProduct(+e.target.value));
-            console.log("eee", e.target.value);
           }
         }}
-        style={{ width: "300px" }}
+        className={styles.textField}
       />
     </div>
   );

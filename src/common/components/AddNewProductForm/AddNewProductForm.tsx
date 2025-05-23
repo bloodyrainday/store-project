@@ -5,10 +5,9 @@ import type { ProductType } from "../../../App";
 import { InputField } from "../InputField/InputField";
 import Button from "@mui/material/Button";
 import { SelectField } from "../SelectField/SelectField";
+import styles from "./AddNewProductForm.module.css";
 
-type Props = {};
-
-export const AddNewProductForm = (props: Props) => {
+export const AddNewProductForm = () => {
   const [newProduct, setNewProduct] = useState<
     Omit<ProductType, "rating" | "id">
   >({
@@ -23,7 +22,6 @@ export const AddNewProductForm = (props: Props) => {
 
   const handleAddProduct = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(newProduct);
     dispatch(createProduct(newProduct));
     setNewProduct({
       title: "",
@@ -35,21 +33,8 @@ export const AddNewProductForm = (props: Props) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <form
-        action=""
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          width: "50%",
-        }}
-      >
+    <div className={styles.wrapper}>
+      <form action="" className={styles.form}>
         <InputField
           type="text"
           name="title"
@@ -84,7 +69,7 @@ export const AddNewProductForm = (props: Props) => {
           variant="contained"
           type="submit"
           onClick={handleAddProduct}
-          style={{ marginTop: "15px" }}
+          className={styles.button}
         >
           add new product
         </Button>

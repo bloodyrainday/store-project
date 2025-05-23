@@ -3,9 +3,11 @@ import { useAppSelector } from "../../hooks/useAppSelector";
 import { deleteProduct, selectProducts } from "../../../model/products-slice";
 import { ProductCard } from "../ProductCard/ProductCard";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
+import styles from "./Products.module.css";
+import type { ProductType } from "../../../App";
 
 type ProductsProps = {
-  setSelectedProduct: React.Dispatch<React.SetStateAction<null>>;
+  setSelectedProduct: React.Dispatch<React.SetStateAction<ProductType | null>>;
 };
 
 export const Products = ({ setSelectedProduct }: ProductsProps) => {
@@ -13,48 +15,26 @@ export const Products = ({ setSelectedProduct }: ProductsProps) => {
 
   const dispatch = useAppDispatch();
 
-  const handleDeleteProduct = (id: any) => {
-    console.log("Удаление товара с ID:", id);
+  const handleDeleteProduct = (id: number) => {
     dispatch(deleteProduct({ id }));
   };
 
   return (
     <>
       <h2>CATALOG</h2>
-      <div
-        style={{
-          display: "grid",
-
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gap: "20px",
-        }}
-      >
+      <div className={styles.wrapper}>
         {products.length === 1 && typeof products[0] === "string" ? (
           <h2>SORRY THERE IS NO PRODUCT WITH SUCH ID!!! :(</h2>
         ) : (
           products?.map((product) => (
-            <div
-              key={product.id}
-              style={{ position: "relative", width: "310px", margin: "0 auto" }}
-            >
-              <ProductCard product={product} onClick={setSelectedProduct} />
+            <div key={product.id} className={styles.productCardWrapper}>
+              <ProductCard product={product} callback={setSelectedProduct} />
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDeleteProduct(product.id);
                 }}
-                style={{
-                  position: "absolute",
-                  top: "5px",
-                  right: "5px",
-                  backgroundColor: "red",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "50%",
-                  width: "25px",
-                  height: "25px",
-                  cursor: "pointer",
-                }}
+                className={styles.closeButton}
               >
                 ×
               </button>
